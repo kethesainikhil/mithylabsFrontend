@@ -77,7 +77,6 @@ const HotelPage = () => {
                                     dispatch(incrementDrafts())
                                     dispatch(incrementVisits())
                                     setDrafts(true);
-                                    setBookings(true);
                                    handleDrafts();
                                 }
                             }} className="w-full bg-yellow-500 dark:bg-yellow-500 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">Draft Booking</button>
