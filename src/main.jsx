@@ -9,6 +9,7 @@ import store from '../store.js'
 import Signup from './components/Signup.jsx'
 import Home from './components/Home.jsx'
 import HotelPage from './components/HotelPage.jsx'
+import Recommendations from './components/Recommendations.jsx'
 const router = createBrowserRouter([
   {
     path:"/",
@@ -29,6 +30,11 @@ const router = createBrowserRouter([
   {
     path:"/hotel/:id",
     element: <HotelPage/>
+  }
+  ,
+  {
+    path:"/recommendations",
+    element: <Recommendations />
   }
 ])
 

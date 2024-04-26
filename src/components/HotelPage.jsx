@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom';
-import { getHotelByIdAsync, incrementBookings, incrementDrafts, incrementVisits } from '../features/AddUserSlice';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getHotelByIdAsync, getHotelsRecommendationsAsync, incrementBookings, incrementDrafts, incrementVisits } from '../features/AddUserSlice';
 
 const HotelPage = () => {
     const hotelInfo = useSelector((state)=>state.user.hotelInfo)
@@ -10,6 +10,7 @@ const HotelPage = () => {
     const id = parseInt(useParams().id);
     const [drafts,setDrafts] = useState(false);
     const [bookings,setBookings] = useState(false);
+    const navigate = useNavigate();
     const handleDrafts = async  ()=>{
         try{
             const res = await  fetch(`${import.meta.env.VITE_BACKEND_URL}/updateHotelsInter`,{
@@ -53,6 +54,7 @@ const HotelPage = () => {
         
 
     }
+    
     useEffect(()=>{
 
         dispatch(getHotelByIdAsync(id))
@@ -88,6 +90,14 @@ const HotelPage = () => {
                                 }
                                 
                             }} className="w-full bg-green-500 dark:bg-green-500 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">Confirm Booking</button>
+                        </div>
+                    </div>
+                    <div>
+                    <div className="w-fullpx-2">
+                            <button  onClick={()=>{
+                                dispatch(getHotelsRecommendationsAsync())
+                                navigate("/recommendations")
+                            }} className="w-full bg-red-500 dark:bg-red-500 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">Get Hotel Recommendations</button>
                         </div>
                     </div>
                 </div>

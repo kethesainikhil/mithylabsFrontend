@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import addUserApi, { getAllHotelsApi, getHotelByIdApi } from './AddUserApi';
+import addUserApi, { getAllHotelsApi, getHotelByIdApi, getHotelsRecommendationsApi } from './AddUserApi';
 
 const initialState = {
     countValue: 0,
@@ -10,7 +10,9 @@ const initialState = {
         Drafts:0,
         Bookings:0
     },
+    hotelRecommendations:[]
 };
+export const SORT_HOTEL_RECOMMENDATIONS = 'user/sortHotelRecommendations';
 export const addUserAsync = createAsyncThunk(
   'user/addUserAsync',
   async (data) => {
@@ -18,10 +20,20 @@ export const addUserAsync = createAsyncThunk(
     return res;
   }
 );
+export const sortHotelRecommendations = () => ({
+    type: SORT_HOTEL_RECOMMENDATIONS
+  });
 export const getAllHotelsAsync = createAsyncThunk(
   'user/getAllHotels',
   async () => {
     const res = await getAllHotelsApi()
+    return res;
+  }
+);
+export const getHotelsRecommendationsAsync = createAsyncThunk(
+  'user/getHotelsRecommendations',
+  async () => {
+    const res = await getHotelsRecommendationsApi()
     return res;
   }
 );
@@ -87,6 +99,23 @@ export const addUserSlice = createSlice({
         state.hotelDetails = action.payload.hotelData
 
       })
+      .addCase(getHotelsRecommendationsAsync.pending, (state) => {
+        state.status = 'loading';
+
+      })
+      .addCase(getHotelsRecommendationsAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.hotelRecommendations = action.payload.data
+      })
+      .addCase(SORT_HOTEL_RECOMMENDATIONS, (state) => {
+        // Sort the hotelRecommendations array based on your sorting logic
+        state.hotelRecommendations.sort((a, b) => {
+          const sumA = a.details.visits + a.details.Bookings + a.details.Drafts;
+          const sumB = b.details.visits + b.details.Bookings + b.details.Drafts;
+          return sumB - sumA; // Sort in descending order
+        });
+        // state.hotelRecommendations = state.hotelRecommendations.slice(0, 10);
+      });
   },
 });
 
