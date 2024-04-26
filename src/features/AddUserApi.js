@@ -11,8 +11,7 @@ async function addUserApi(data) {
                 name: name,
                 email: email,
                 password: password
-            }),
-            credentials: 'include' // Include credentials (cookies) in the request
+            }),// Include credentials (cookies) in the request
         });
 
         console.log(response,"response after fetch");
