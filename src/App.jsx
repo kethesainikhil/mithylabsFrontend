@@ -4,14 +4,15 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { increment } from './features/AddUserSlice'
+import { useNavigate } from 'react-router-dom'
 
 function App() {
+  const navigate = useNavigate();
   const count = useSelector((state)=>state.user.countValue)
   const dispatch = useDispatch();
   return (
     <div>
-      <h1>count:{count}</h1>
-      <button onClick={()=>dispatch(increment())}>increment</button>
+      <button onClick={()=>navigate("/signup")}>signup</button>
     </div>
   )
 }
