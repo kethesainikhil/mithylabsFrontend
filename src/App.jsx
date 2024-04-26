@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom'
 function App() {
   const navigate = useNavigate();
   return (
-    <div className=''>
-      <button onClick={()=>navigate("/signup")}>signup</button>
+    <div className='flex items-center my-auto'>
+      <button className='flex items-center justify-center m-auto  mt-64 py-6 px-6 border-2 border-black bg-blue-300 hover:bg-transparent'  onClick={()=>navigate("/signup")}>signup</button>
     </div>
   )
 }

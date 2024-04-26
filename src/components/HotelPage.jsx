@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
-import { getHotelByIdAsync, incrementBookings, incrementDrafts, incrementVisits } from '../features/AddUserSlice';
+import { getHotelByIdAsync, incrementBookings, incrementDrafts } from '../features/AddUserSlice';
 
 const HotelPage = () => {
     const hotelInfo = useSelector((state)=>state.user.hotelInfo)
     const hotelDetails = useSelector((state)=>state.user.hotelDetails)
-    console.log(hotelDetails,"hoteldetails")
     const dispatch = useDispatch();
     const id = parseInt(useParams().id);
-    console.log(typeof id);
     const [drafts,setDrafts] = useState(false);
     const [bookings,setBookings] = useState(false);
     const handleDrafts = async  ()=>{
