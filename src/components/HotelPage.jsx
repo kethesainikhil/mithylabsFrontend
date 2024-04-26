@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
-import { getHotelByIdAsync, incrementBookings, incrementDrafts } from '../features/AddUserSlice';
+import { getHotelByIdAsync, incrementBookings, incrementDrafts, incrementVisits } from '../features/AddUserSlice';
 
 const HotelPage = () => {
     const hotelInfo = useSelector((state)=>state.user.hotelInfo)
@@ -73,6 +73,7 @@ const HotelPage = () => {
                             <button  onClick={()=>{
                                 if(!drafts){
                                     dispatch(incrementDrafts())
+                                    dispatch(incrementVisits())
                                     setDrafts(true);
                                    handleDrafts()
                                 }
