@@ -1,8 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import addUserApi from './AddUserApi';
+import addUserApi, { getAllHotelsApi, getHotelByIdApi } from './AddUserApi';
 
 const initialState = {
     countValue: 0,
+    hotels:[],
+    hotelInfo:{},
+    hotelDetails:{
+        visits:0,
+        Drafts:0,
+        Bookings:0
+    },
 };
 export const addUserAsync = createAsyncThunk(
   'user/addUserAsync',
@@ -11,6 +18,21 @@ export const addUserAsync = createAsyncThunk(
     return res;
   }
 );
+export const getAllHotelsAsync = createAsyncThunk(
+  'user/getAllHotels',
+  async () => {
+    const res = await getAllHotelsApi()
+    return res;
+  }
+);
+export const getHotelByIdAsync = createAsyncThunk(
+  'user/getHotelById',
+  async (id) => {
+    const res = await getHotelByIdApi(id)
+    return res;
+  }
+);
+
 
 
 
@@ -21,6 +43,15 @@ export const addUserSlice = createSlice({
   reducers: {
     increment: (state) => {
       state.countValue += 1;
+    },
+    incrementVisits: (state) => {   
+    state.hotelDetails.visits += 1
+    },
+    incrementDrafts: (state) => {
+      state.hotelDetails.Drafts += 1
+    },
+    incrementBookings: (state) => {
+      state.hotelDetails.Bookings += 1
     }
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -36,9 +67,29 @@ export const addUserSlice = createSlice({
         state.userDetails = action.payload
 
       })
+      .addCase(getAllHotelsAsync.pending, (state) => {
+        state.status = 'loading';
+
+      })
+      .addCase(getAllHotelsAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.hotels = action.payload.data
+
+      })
+      .addCase(getHotelByIdAsync.pending, (state) => {
+        state.hotelInfo = null;
+        state.status = 'loading';
+
+      })
+      .addCase(getHotelByIdAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.hotelInfo = action.payload.data
+        state.hotelDetails = action.payload.hotelData
+
+      })
   },
 });
 
-export const { increment } = addUserSlice.actions;
+export const { increment , incrementVisits, incrementDrafts, incrementBookings } = addUserSlice.actions;
 
 export default addUserSlice.reducer;

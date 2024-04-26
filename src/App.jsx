@@ -8,10 +8,8 @@ import { useNavigate } from 'react-router-dom'
 
 function App() {
   const navigate = useNavigate();
-  const count = useSelector((state)=>state.user.countValue)
-  const dispatch = useDispatch();
   return (
-    <div>
+    <div className=''>
       <button onClick={()=>navigate("/signup")}>signup</button>
     </div>
   )

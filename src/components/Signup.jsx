@@ -1,8 +1,8 @@
 import React, { useDebugValue } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { addUserAsync } from '../features/AddUserSlice'
+import { Link, useNavigate } from 'react-router-dom'
+import { addUserAsync, getAllHotelsAsync } from '../features/AddUserSlice'
 
 const Signup = () => {
     const {
@@ -11,8 +11,10 @@ const Signup = () => {
         formState: { errors },
       } = useForm()
       const dispatch = useDispatch();
+      const navigate = useNavigate();
       const onSubmit = (data) => {
           dispatch(addUserAsync(data));
+          navigate("/home")
       }
   return (
     <div className="bg-grey-lighter min-h-screen flex flex-col">
