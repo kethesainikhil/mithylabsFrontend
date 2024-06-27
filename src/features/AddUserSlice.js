@@ -17,7 +17,7 @@ export const addUserAsync = createAsyncThunk(
   'user/addUserAsync',
   async (data) => {
     const res = await addUserApi(data)
-    return res;
+    return res.data;
   }
 );
 export const sortHotelRecommendations = () => ({

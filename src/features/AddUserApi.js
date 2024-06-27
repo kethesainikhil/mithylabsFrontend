@@ -1,27 +1,21 @@
+import axios from "axios";
+
 async function addUserApi(data) {
     const { name, email, password } = data;
     
     try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/addUser`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: name,
-                email: email,
-                password: password
-            }),
-            // credentials: 'include' // Include credentials (cookies) in the request
+        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/addUser`, {
+            name,
+            email,
+            password,
+        }, {
+            withCredentials: true
         });
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
 
-        const res = await response.json();
+        console.log(response,"respone from teh server")
 
-        return res;
+        return response;
 
     } catch (e) {
         console.error(e, "error in api function");
